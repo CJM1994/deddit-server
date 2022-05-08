@@ -10,8 +10,8 @@ const main = async () => {
   const post = orm.em.create(Post, { title: 'new post here' });
   await orm.em.persistAndFlush(post);
 
-  const posts = await orm.em.find(Post, {})
-  console.log(posts);
+  // const posts = await orm.em.find(Post, {})
+  // console.log(posts);
 
 }
 
