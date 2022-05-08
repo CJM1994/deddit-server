@@ -19,6 +19,8 @@ const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
 const hello_1 = require("./resolvers/hello");
+const post_1 = require("./resolvers/post");
+require("reflect-metadata");
 const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
     yield orm.getMigrator().up();
@@ -26,9 +28,12 @@ const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
     const httpServer = http_1.default.createServer(app);
     const server = new apollo_server_express_1.ApolloServer({
         schema: yield (0, type_graphql_1.buildSchema)({
-            resolvers: [hello_1.HelloResolver],
+            resolvers: [hello_1.HelloResolver, post_1.PostResolver],
             validate: false,
-        })
+        }),
+        context: () => {
+            return { em: orm.em };
+        },
     });
     yield server.start();
     server.applyMiddleware({ app });
