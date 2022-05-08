@@ -22,15 +22,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Post.prototype, "id", void 0);
 __decorate([
-    (0, core_1.Property)(),
+    (0, core_1.Property)({ type: 'date' }),
     __metadata("design:type", Object)
 ], Post.prototype, "createdAt", void 0);
 __decorate([
-    (0, core_1.Property)({ onUpdate: () => new Date() }),
+    (0, core_1.Property)({ onUpdate: () => new Date(), type: 'date' }),
     __metadata("design:type", Object)
 ], Post.prototype, "updatedAt", void 0);
 __decorate([
-    (0, core_1.Property)(),
+    (0, core_1.Property)({ type: 'varchar(255)' }),
     __metadata("design:type", String)
 ], Post.prototype, "title", void 0);
 Post = __decorate([

@@ -17,7 +17,10 @@ const Post_1 = require("./entities/Post");
 const mikro_orm_config_1 = __importDefault(require("./mikro-orm.config"));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
+    yield orm.getMigrator().up();
     const post = orm.em.create(Post_1.Post, { title: 'new post here' });
     yield orm.em.persistAndFlush(post);
+    const posts = yield orm.em.find(Post_1.Post, {});
+    console.log(posts);
 });
 main();
