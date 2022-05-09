@@ -22,23 +22,31 @@ export class PostResolver {
   async createPost(
     @Arg('title', () => String) title: string,
     @Ctx() { em }: MainContext): Promise<Post | null> {
-      const post = em.create(Post, { title });
-      await em.persistAndFlush(post);
-      return post;
+    const post = em.create(Post, { title });
+    await em.persistAndFlush(post);
+    return post;
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, { nullable: true })
   async updatePost(
     @Arg('id', () => Int) id: number,
     @Arg('title', () => String) title: string,
     @Ctx() { em }: MainContext): Promise<Post | null> {
-      const post = await em.findOne(Post, { id });
-      if (post === null) {
-        return null;
-      }
-      post.title = title;
-      await em.persistAndFlush(post);
-      return post;
+    const post = await em.findOne(Post, { id });
+    if (post === null) {
+      return null;
+    }
+    post.title = title;
+    await em.persistAndFlush(post);
+    return post;
+  }
+
+  @Mutation(() => Boolean)
+  async deletePost(
+    @Arg('id', () => Int) id: number,
+    @Ctx() { em }: MainContext): Promise<Boolean> {
+    await em.nativeDelete(Post, { id });
+    return true;
   }
 
 }
