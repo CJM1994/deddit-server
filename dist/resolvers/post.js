@@ -38,6 +38,17 @@ let PostResolver = class PostResolver {
             return post;
         });
     }
+    updatePost(id, title, { em }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const post = yield em.findOne(Post_1.Post, { id });
+            if (post === null) {
+                return null;
+            }
+            post.title = title;
+            yield em.persistAndFlush(post);
+            return post;
+        });
+    }
 };
 __decorate([
     (0, type_graphql_1.Query)(() => [Post_1.Post]),
@@ -62,6 +73,15 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], PostResolver.prototype, "createPost", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Post_1.Post),
+    __param(0, (0, type_graphql_1.Arg)('id', () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)('title', () => String)),
+    __param(2, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String, Object]),
+    __metadata("design:returntype", Promise)
+], PostResolver.prototype, "updatePost", null);
 PostResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], PostResolver);
