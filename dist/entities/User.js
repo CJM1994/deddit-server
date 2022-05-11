@@ -19,31 +19,31 @@ let User = class User {
     }
 };
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ type: 'date' }),
+    (0, type_graphql_1.Field)(() => String),
+    (0, core_1.Property)({ type: 'date' }),
     __metadata("design:type", Object)
 ], User.prototype, "createdAt", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ onUpdate: () => new Date(), type: 'date' }),
+    (0, type_graphql_1.Field)(() => String),
+    (0, core_1.Property)({ onUpdate: () => new Date(), type: 'date' }),
     __metadata("design:type", Object)
 ], User.prototype, "updatedAt", void 0);
 __decorate([
-    type_graphql_1.Field(),
-    core_1.PrimaryKey(),
+    (0, type_graphql_1.Field)(),
+    (0, core_1.PrimaryKey)(),
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
-    type_graphql_1.Field(),
-    core_1.Property({ type: 'varchar(255)', unique: true }),
+    (0, type_graphql_1.Field)(),
+    (0, core_1.Property)({ type: 'varchar(255)', unique: true }),
     __metadata("design:type", String)
 ], User.prototype, "username", void 0);
 __decorate([
-    core_1.Property({ type: 'varchar(255)' }),
+    (0, core_1.Property)({ type: 'varchar(255)' }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 User = __decorate([
-    type_graphql_1.ObjectType(),
-    core_1.Entity()
+    (0, type_graphql_1.ObjectType)(),
+    (0, core_1.Entity)()
 ], User);
 exports.User = User;

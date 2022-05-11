@@ -19,27 +19,27 @@ let Post = class Post {
     }
 };
 __decorate([
-    type_graphql_1.Field(() => type_graphql_1.Int),
-    core_1.PrimaryKey(),
+    (0, type_graphql_1.Field)(() => type_graphql_1.Int),
+    (0, core_1.PrimaryKey)(),
     __metadata("design:type", Number)
 ], Post.prototype, "id", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ type: 'date' }),
+    (0, type_graphql_1.Field)(() => String),
+    (0, core_1.Property)({ type: 'date' }),
     __metadata("design:type", Object)
 ], Post.prototype, "createdAt", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ onUpdate: () => new Date(), type: 'date' }),
+    (0, type_graphql_1.Field)(() => String),
+    (0, core_1.Property)({ onUpdate: () => new Date(), type: 'date' }),
     __metadata("design:type", Object)
 ], Post.prototype, "updatedAt", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ type: 'varchar(255)' }),
+    (0, type_graphql_1.Field)(() => String),
+    (0, core_1.Property)({ type: 'varchar(255)' }),
     __metadata("design:type", String)
 ], Post.prototype, "title", void 0);
 Post = __decorate([
-    type_graphql_1.ObjectType(),
-    core_1.Entity()
+    (0, type_graphql_1.ObjectType)(),
+    (0, core_1.Entity)()
 ], Post);
 exports.Post = Post;

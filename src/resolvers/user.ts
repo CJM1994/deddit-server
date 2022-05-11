@@ -35,13 +35,29 @@ export class UserResolver {
     return em.find(User, {});
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserResponse)
   async register(
     @Arg('input', () => UsernamePasswordInput) input: UsernamePasswordInput,
-    @Ctx() { em }: MainContext): Promise<User> {
+    @Ctx() { em }: MainContext): Promise<UserResponse> {
+
+    if (input.username.length <= 3) { // Username length validation
+      return { errors: [{ message: 'Username must be at least 3 characters', field: 'username' }] };
+    }
+
+    if (input.password.length <= 3) { // Password length validation
+      return { errors: [{ message: 'Password must be at least 3 characters', field: 'password' }] };
+    }
+
     const user = em.create(User, { username: input.username, password: await argon2.hash(input.password) });
-    await em.persistAndFlush(user);
-    return user;
+
+    try {
+      await em.persistAndFlush(user);
+    } catch (err: any) {
+      if (err.code === '23505') // Username already exists error
+        return { errors: [{ message: 'Username already in use', field: 'username' }] };
+    }
+
+    return { user };
   }
 
   @Mutation(() => UserResponse)
@@ -76,6 +92,6 @@ export class UserResolver {
     }
 
     return { user: user };
-    
+
   }
 }

@@ -25,10 +25,10 @@ require("reflect-metadata");
 const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
     yield orm.getMigrator().up();
-    const app = express_1.default();
+    const app = (0, express_1.default)();
     const httpServer = http_1.default.createServer(app);
     const server = new apollo_server_express_1.ApolloServer({
-        schema: yield type_graphql_1.buildSchema({
+        schema: yield (0, type_graphql_1.buildSchema)({
             resolvers: [hello_1.HelloResolver, post_1.PostResolver, user_1.UserResolver],
             validate: false,
         }),
