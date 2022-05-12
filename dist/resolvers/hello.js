@@ -17,12 +17,12 @@ let HelloResolver = class HelloResolver {
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => String),
+    type_graphql_1.Query(() => String),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], HelloResolver.prototype, "hello", null);
 HelloResolver = __decorate([
-    (0, type_graphql_1.Resolver)()
+    type_graphql_1.Resolver()
 ], HelloResolver);
 exports.HelloResolver = HelloResolver;
