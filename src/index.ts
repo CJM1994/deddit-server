@@ -17,6 +17,7 @@ import session from "express-session"
 import { createClient } from "redis"
 import connectRedis from 'connect-redis'
 
+// Constants
 import { __prod__ } from './constants'
 
 const bootServer = async () => {
@@ -42,6 +43,7 @@ const bootServer = async () => {
         maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
         httpOnly: true,
         secure: __prod__, // when true cookie only works through https
+        sameSite: 'lax', // allows user to maintain login status arriving from external link
       },
       saveUninitialized: false,
       secret: "lkjads?flkasdhDlkahsdflkjadsh",
@@ -55,8 +57,8 @@ const bootServer = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: () => {
-      return { em: orm.em }
+    context: ({ req, res }) => {
+      return { em: orm.em, req, res }
     },
   });
   await server.start();

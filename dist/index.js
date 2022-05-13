@@ -28,6 +28,7 @@ require("reflect-metadata");
 const express_session_1 = __importDefault(require("express-session"));
 const redis_1 = require("redis");
 const connect_redis_1 = __importDefault(require("connect-redis"));
+// Constants
 const constants_1 = require("./constants");
 const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
@@ -48,6 +49,7 @@ const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
             maxAge: 1000 * 60 * 60 * 24 * 365,
             httpOnly: true,
             secure: constants_1.__prod__,
+            sameSite: 'lax',
         },
         saveUninitialized: false,
         secret: "lkjads?flkasdhDlkahsdflkjadsh",
@@ -59,8 +61,8 @@ const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
             resolvers: [hello_1.HelloResolver, post_1.PostResolver, user_1.UserResolver],
             validate: false,
         }),
-        context: () => {
-            return { em: orm.em };
+        context: ({ req, res }) => {
+            return { em: orm.em, req, res };
         },
     });
     yield server.start();
