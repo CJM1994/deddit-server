@@ -3,6 +3,14 @@ import { User } from '../entities/User'
 import { MainContext } from '../types'
 import argon2 from 'argon2'
 
+// Temporary workaround, probably a better way to deal with this typing issue
+// Revisit when finished w/ typescript udemy course
+declare module 'express-session' {
+  interface SessionData {
+    userId: number;
+  }
+}
+
 @InputType()
 class UsernamePasswordInput {
   @Field()
@@ -63,7 +71,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async login(
     @Arg('input', () => UsernamePasswordInput) input: UsernamePasswordInput,
-    @Ctx() { em }: MainContext): Promise<UserResponse> {
+    @Ctx() { em, req }: MainContext): Promise<UserResponse> {
 
     // User validate
     const user = await em.findOne(User, { username: input.username });
@@ -90,6 +98,8 @@ export class UserResolver {
         ]
       };
     }
+
+    req.session.userId = user.id;
 
     return { user: user };
 
