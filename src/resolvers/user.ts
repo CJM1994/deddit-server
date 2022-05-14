@@ -46,7 +46,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('input', () => UsernamePasswordInput) input: UsernamePasswordInput,
-    @Ctx() { em }: MainContext): Promise<UserResponse> {
+    @Ctx() { em, req }: MainContext): Promise<UserResponse> {
 
     if (input.username.length <= 3) { // Username length validation
       return { errors: [{ message: 'Username must be at least 3 characters', field: 'username' }] };
@@ -65,6 +65,7 @@ export class UserResolver {
         return { errors: [{ message: 'Username already in use', field: 'username' }] };
     }
 
+    req.session.userId = user.id;
     return { user };
   }
 
@@ -100,7 +101,6 @@ export class UserResolver {
     }
 
     req.session.userId = user.id;
-
     return { user: user };
 
   }

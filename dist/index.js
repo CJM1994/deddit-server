@@ -33,13 +33,13 @@ const constants_1 = require("./constants");
 const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
     yield orm.getMigrator().up();
-    const app = express_1.default();
+    const app = (0, express_1.default)();
     // Session storage (cookies / user auth)
     // Must come before apollo-server middleware
-    const RedisStore = connect_redis_1.default(express_session_1.default);
-    const redisClient = redis_1.createClient({ legacyMode: true });
+    const RedisStore = (0, connect_redis_1.default)(express_session_1.default);
+    const redisClient = (0, redis_1.createClient)({ legacyMode: true });
     redisClient.connect().catch(console.error);
-    app.use(express_session_1.default({
+    app.use((0, express_session_1.default)({
         name: 'qid',
         store: new RedisStore({
             client: redisClient,
@@ -57,7 +57,7 @@ const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
     }));
     const httpServer = http_1.default.createServer(app);
     const server = new apollo_server_express_1.ApolloServer({
-        schema: yield type_graphql_1.buildSchema({
+        schema: yield (0, type_graphql_1.buildSchema)({
             resolvers: [hello_1.HelloResolver, post_1.PostResolver, user_1.UserResolver],
             validate: false,
         }),
@@ -66,7 +66,13 @@ const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
         },
     });
     yield server.start();
-    server.applyMiddleware({ app });
+    server.applyMiddleware({
+        app,
+        cors: {
+            origin: ["https://studio.apollographql.com"],
+            credentials: true,
+        },
+    });
     yield new Promise(resolve => httpServer.listen({ port: 4000 }, resolve));
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
 });

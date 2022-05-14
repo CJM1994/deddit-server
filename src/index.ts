@@ -2,6 +2,7 @@
 import http from 'http'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
+import cors from 'cors'
 
 // Mikro-ORM & GraphQL
 import { MikroORM } from '@mikro-orm/core'
@@ -43,7 +44,7 @@ const bootServer = async () => {
         maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
         httpOnly: true,
         secure: __prod__, // when true cookie only works through https
-        sameSite: 'lax', // allows user to maintain login status arriving from external link
+        sameSite: 'lax',
       },
       saveUninitialized: false,
       secret: "lkjads?flkasdhDlkahsdflkjadsh",
@@ -62,7 +63,13 @@ const bootServer = async () => {
     },
   });
   await server.start();
-  server.applyMiddleware({ app });
+  server.applyMiddleware({
+    app,
+    cors: {
+      origin: ["https://studio.apollographql.com"],
+      credentials: true,
+    },
+  });
   await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
 }
