@@ -71,6 +71,15 @@ let UserResolver = class UserResolver {
     users({ em }) {
         return em.find(User_1.User, {});
     }
+    me({ em, req }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (req.session.userId) {
+                const user = yield em.findOne(User_1.User, { id: req.session.userId });
+                return user;
+            }
+            return null;
+        });
+    }
     register(input, { em, req }) {
         return __awaiter(this, void 0, void 0, function* () {
             if (input.username.length <= 3) { // Username length validation
@@ -129,6 +138,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "users", null);
+__decorate([
+    (0, type_graphql_1.Query)(() => User_1.User, { nullable: true }),
+    __param(0, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "me", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
     __param(0, (0, type_graphql_1.Arg)('input', () => UsernamePasswordInput)),

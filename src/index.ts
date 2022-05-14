@@ -65,6 +65,7 @@ const bootServer = async () => {
   await server.start();
   server.applyMiddleware({
     app,
+    // Cors for testing Set-Cookie in headers
     cors: {
       origin: ["https://studio.apollographql.com"],
       credentials: true,

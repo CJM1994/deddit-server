@@ -43,6 +43,18 @@ export class UserResolver {
     return em.find(User, {});
   }
 
+  @Query(() => User, { nullable: true })
+  async me(
+    @Ctx() { em, req }: MainContext) {
+
+    if (req.session.userId) {
+      const user = await em.findOne(User, { id: req.session.userId });
+      return user;
+    }
+
+    return null;
+  }
+
   @Mutation(() => UserResponse)
   async register(
     @Arg('input', () => UsernamePasswordInput) input: UsernamePasswordInput,
