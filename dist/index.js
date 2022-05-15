@@ -70,7 +70,7 @@ const bootServer = () => __awaiter(void 0, void 0, void 0, function* () {
         app,
         // Cors for testing Set-Cookie in headers
         cors: {
-            origin: ["https://studio.apollographql.com"],
+            origin: ["https://studio.apollographql.com", "http://localhost:3000"],
             credentials: true,
         },
     });
