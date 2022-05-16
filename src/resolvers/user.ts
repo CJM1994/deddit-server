@@ -60,11 +60,11 @@ export class UserResolver {
     @Arg('input', () => UsernamePasswordInput) input: UsernamePasswordInput,
     @Ctx() { em, req }: MainContext): Promise<UserResponse> {
 
-    if (input.username.length <= 3) { // Username length validation
+    if (input.username.length < 3) { // Username length validation
       return { errors: [{ message: 'Username must be at least 3 characters', field: 'username' }] };
     }
 
-    if (input.password.length <= 3) { // Password length validation
+    if (input.password.length < 3) { // Password length validation
       return { errors: [{ message: 'Password must be at least 3 characters', field: 'password' }] };
     }
 

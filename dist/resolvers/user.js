@@ -82,10 +82,10 @@ let UserResolver = class UserResolver {
     }
     register(input, { em, req }) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (input.username.length <= 3) { // Username length validation
+            if (input.username.length < 3) { // Username length validation
                 return { errors: [{ message: 'Username must be at least 3 characters', field: 'username' }] };
             }
-            if (input.password.length <= 3) { // Password length validation
+            if (input.password.length < 3) { // Password length validation
                 return { errors: [{ message: 'Password must be at least 3 characters', field: 'password' }] };
             }
             const user = em.create(User_1.User, { username: input.username, password: yield argon2_1.default.hash(input.password) });
