@@ -10,7 +10,7 @@ const path_1 = __importDefault(require("path"));
 const config = {
     migrations: {
         path: path_1.default.join(__dirname, './migrations'),
-        glob: '!(*.d).{js,ts}', // how to match migration files (all .js and .ts files, but not .d.ts)
+        glob: '!(*.d).{js,ts}',
     },
     entities: [Post_1.Post, User_1.User],
     type: 'postgresql',

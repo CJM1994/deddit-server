@@ -116,4 +116,22 @@ export class UserResolver {
     return { user: user };
 
   }
+
+  @Mutation(() => Boolean)
+  logout(
+    @Ctx() { req, res }: MainContext) {
+    const destroy = new Promise(resolve => req.session.destroy(err => {
+      if (err) {
+        console.error(err);
+        resolve(false);
+        return
+      } else {
+        res.clearCookie('qid');
+        resolve(true);
+        return
+      }
+    }));
+    return destroy;
+  }
+
 }
