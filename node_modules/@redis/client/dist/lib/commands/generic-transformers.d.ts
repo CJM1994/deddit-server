@@ -68,6 +68,11 @@ export interface GeoSearchOptions {
     COUNT?: GeoCountArgument;
 }
 export declare function pushGeoSearchArguments(args: RedisCommandArguments, key: RedisCommandArgument, from: GeoSearchFrom, by: GeoSearchBy, options?: GeoSearchOptions): RedisCommandArguments;
+export declare function pushGeoRadiusArguments(args: RedisCommandArguments, key: RedisCommandArgument, from: GeoSearchFrom, radius: number, unit: GeoUnits, options?: GeoSearchOptions): RedisCommandArguments;
+export interface GeoRadiusStoreOptions extends GeoSearchOptions {
+    STOREDIST?: boolean;
+}
+export declare function pushGeoRadiusStoreArguments(args: RedisCommandArguments, key: RedisCommandArgument, from: GeoSearchFrom, radius: number, unit: GeoUnits, destination: RedisCommandArgument, options?: GeoRadiusStoreOptions): RedisCommandArguments;
 export declare enum GeoReplyWith {
     DISTANCE = "WITHDIST",
     HASH = "WITHHASH",
@@ -200,4 +205,13 @@ export interface SlotRange {
     end: number;
 }
 export declare function pushSlotRangesArguments(args: RedisCommandArguments, ranges: SlotRange | Array<SlotRange>): RedisCommandArguments;
+export declare type RawRangeReply = [
+    start: number,
+    end: number
+];
+export interface RangeReply {
+    start: number;
+    end: number;
+}
+export declare function transformRangeReply([start, end]: RawRangeReply): RangeReply;
 export {};
